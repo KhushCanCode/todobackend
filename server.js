@@ -15,10 +15,19 @@ const app = express();
 
 //Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://todoapp-nine-pearl.vercel.app', // Your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Handle preflight requests
+app.options('*', cors());
+
+
 
 // Using environment variables
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 //Routes
 app.get("/", (req, res) => {
