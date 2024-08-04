@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 //Environment variable for database url
-const DB_URI = process.env.DB_URI;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // Connecting Database
 const conn = async (req, res) => {
   try {
-    await mongoose.connect(DB_URI)
+    await mongoose.connect(MONGODB_URI)
     .then(() => console.log("MongoDB connected"));
   } catch (err) {
     console.log(err);

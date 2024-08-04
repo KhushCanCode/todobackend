@@ -4,41 +4,46 @@ require('dotenv').config();
 //Database connection is done in conn.js file
 require("./connection/conn");
 
-//cors for backend and axios for frontend
+// Importing dependencies
 const cors = require('cors');
+const express = require('express');
 
 const auth = require("./routes/auth");
 const list = require("./routes/list");
 
-const express = require('express');
 const app = express();
 
 //Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'https://todoapp-nine-pearl.vercel.app', // Your frontend URL
+  origin: 'http://localhost:5173', // Your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Handle preflight requests
-app.options('*', cors());
 
 
 
-// Using environment variables
-const PORT = process.env.PORT;
+
 
 //Routes
 app.get("/", (req, res) => {
-    res.send('Hello, Bitches');
+  res.send('Hello, welcome to the API!');
 });
 
 app.use("/api/v1/", auth); //signup and login
 app.use("/api/v2/", list); //task creation, deletion, updation
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 
 // Starting the Server
+const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
 });
