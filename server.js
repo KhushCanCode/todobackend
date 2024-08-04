@@ -15,11 +15,7 @@ const app = express();
 
 //Middleware
 app.use(express.json());
-app.use(cors({
-  origin: 'https://todofrontend-dun.vercel.app', // Your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 
 
 
